@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Zbros</string>
+    <string name="url_hint">Cari atau masukkan URL aman...</string>
+    <string name="go_button">Buka</string>
+</resources>
