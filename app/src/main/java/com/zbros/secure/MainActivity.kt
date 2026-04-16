@@ -10,10 +10,14 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
+    private lateinit var pluginManager: PluginManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        pluginManager = PluginManager(this)
+        pluginManager.initializePlugins() // Siapkan plugin di folder aman
 
         webView = findViewById(R.id.webView)
         val urlInput = findViewById<EditText>(R.id.urlInput)
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         settings.allowContentAccess = false
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, false) // Blokir cookie pihak ketiga
 
-        webView.webViewClient = object : WebViewClient() {
+        webView.webViewClient = SecureWebClient {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 injectInternalPlugins() // Suntikkan plugin setiap halaman selesai dimuat
